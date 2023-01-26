@@ -13,8 +13,27 @@ $conexionBD = new mysqli($servidos, $usuario, $contrasenia, $nombreBaseDatos);
 if (isset($_GET["consultar"])) {
 
     $sqlEmpleados =mysqli_query($conexionBD, "SELECT * FROM empleados WHERE id=".$_GET["consultar"]);
-    
+
+    if (mysqli_num_rows($sqlEmpleados) > 0) {
+        $$empleados = mysqli_fetch_all($sqlEmpleados,MYSQLI_ASSOC);
+        echo json_encode($empleados);
+        exit();
+    }
+    else {echo json_encode(["success"=>0]);
+    }
+
 }
 
+//Borrar pero se le debe enviar una clave (par borrarlo)
+if (isset($_GET["borrar"])){
+    $sqlEmpleados =mysqli_query($conexionBD, "DELETE * FROM empleados WHERE id=".$_GET["borrar"]);
+    if($sqlEmpleados){
+    echo json_encode(["success"=>1]);
+    exit();
+    }
+    else{ echo json_encode(["success"=>0]);
+    }
+    
 
+}
 ?>
