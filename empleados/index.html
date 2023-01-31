@@ -70,7 +70,7 @@
     </div>
 
 <script>
-
+    VAR URL=""
     var aplicacion= new function(){
         this.nombre= document.getElementById("nombre");
         this.correo= document.getElementById("correo");
@@ -79,6 +79,29 @@
 
         this.Leer= function(){
             var datos="";
+
+            fetch(url)
+            .then(r=>r.json())
+            .then((respuesta)=>{
+
+                console.log(respuesta);
+
+                respuesta.map(
+                    function (empleado,index, array){
+                        datos+="<tr>";
+                        datos+="<td>"+empleado.id+"</td>";
+                        datos+="<td>"+empleado.nombre+"</td>";
+                        datos+="<td>"+empleado.correo+"</td>";
+                        datos+="<td>"+empleado.id+"</td>";
+
+                        datos+="</tr>";
+                    }
+                );
+                return this.empleados.innerHTML=datos;
+
+            })
+            .catch(console.log);
+
             datos=" <tr><td>1234</td> <td>Frankli Gomez</td> <td>frago@gmail.com</td> <td>Editar | Borrar</td> </tr>";
             return this.empleados.innerHTML=datos;
 
